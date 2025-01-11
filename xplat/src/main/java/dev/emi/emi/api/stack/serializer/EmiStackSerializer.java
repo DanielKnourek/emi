@@ -86,17 +86,24 @@ public interface EmiStackSerializer<T extends EmiStack> extends EmiIngredientSer
 
 	@Override
 	default JsonElement serialize(T stack) {
+		String nbt = null;
+		ComponentChanges componentChanges = stack.getComponentChanges();
+		if (componentChanges != ComponentChanges.EMPTY) {
+			nbt = ComponentChanges.CODEC.encodeStart(withRegistryAccess(NbtOps.INSTANCE), componentChanges).getOrThrow().asString();
+		}
 		if (stack.getAmount() == 1 && stack.getChance() == 1 && stack.getRemainder().isEmpty()) {
 			String s = getType() + ":" + stack.getId();
-			var componentChanges = stack.getComponentChanges();
-			if (componentChanges != ComponentChanges.EMPTY) {
-				s += ComponentChanges.CODEC.encodeStart(withRegistryAccess(NbtOps.INSTANCE), componentChanges).getOrThrow().asString();
+			if (nbt != null) {
+				s += nbt;
 			}
 			return new JsonPrimitive(s);
 		} else {
 			JsonObject json = new JsonObject();
 			json.addProperty("type", getType());
 			json.addProperty("id", stack.getId().toString());
+			if (nbt != null) {
+				json.addProperty("nbt", nbt);
+			}
 			if (stack.getAmount() != 1) {
 				json.addProperty("amount", stack.getAmount());
 			}

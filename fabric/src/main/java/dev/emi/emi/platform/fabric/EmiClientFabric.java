@@ -69,7 +69,9 @@ public class EmiClientFabric implements ClientModInitializer {
 		});
 
 		EmiNetwork.initClient(packet -> {
-			ClientPlayNetworking.send(packet);
+			if (ClientPlayNetworking.canSend(packet.getId())) {
+				ClientPlayNetworking.send(packet);
+			}
 		});
 
 		registerPacketReader(EmiNetwork.PING, PingS2CPacket::new);

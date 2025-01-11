@@ -96,7 +96,7 @@ public class EmiSearch {
 				}
 			} catch (Exception e) {
 				EmiLog.error("EMI caught an exception while baking search for " + stack);
-				e.printStackTrace();
+				EmiLog.error(e);
 			}
 		}
 		for (Supplier<EmiAlias> supplier : EmiData.aliases) {
