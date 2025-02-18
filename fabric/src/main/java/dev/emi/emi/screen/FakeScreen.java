@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import dev.emi.emi.EmiPort;
+import dev.emi.emi.runtime.EmiLog;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -30,7 +31,7 @@ public class FakeScreen extends Screen {
 			try {
 				list.add(TooltipComponent.of(data.get()));
 			} catch (Throwable e) {
-				e.printStackTrace();
+				EmiLog.error("Exception converting TooltipComponent", e);
 			}
 		}
 		return list;

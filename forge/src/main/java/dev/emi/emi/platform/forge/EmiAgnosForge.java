@@ -126,8 +126,7 @@ public class EmiAgnosForge extends EmiAgnos {
 						}
 					}
 				} catch (Throwable t) {
-					EmiLog.error("Exception constructing entrypoint:");
-					t.printStackTrace();
+					EmiLog.error("Exception constructing entrypoint:", t);
 				}
 			}
 		}
@@ -151,7 +150,7 @@ public class EmiAgnosForge extends EmiAgnos {
 								EmiStack.of(EmiPort.setPotion(stack.copy(), recipe.output.get())), id));
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						EmiLog.error("Error registering brewing recipe", e);
 					}
 				}
 			}
@@ -184,7 +183,7 @@ public class EmiAgnosForge extends EmiAgnos {
 
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				EmiLog.error("Error registering brewing recipe", e);
 			}
 		}
 		for (IBrewingRecipe ibr : net.minecraftforge.common.brewing.BrewingRecipeRegistry.getRecipes()) {
@@ -202,7 +201,7 @@ public class EmiAgnosForge extends EmiAgnos {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				EmiLog.error("Error registering brewing recipe", e);
 			}
 		}
 	}

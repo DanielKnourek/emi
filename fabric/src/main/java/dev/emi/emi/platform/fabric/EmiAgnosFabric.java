@@ -117,8 +117,7 @@ public class EmiAgnosFabric extends EmiAgnos {
 			try {
 				list.add(container.getProvider().getMetadata().getId());
 			} catch (Throwable t) {
-				EmiLog.error("Critical exception thrown when reading EMI Plugin from mod " + container.getProvider().getMetadata().getId());
-				EmiLog.error(t);
+				EmiLog.error("Critical exception thrown when reading EMI Plugin from mod " + container.getProvider().getMetadata().getId(), t);
 			}
 		}
 		return list;
@@ -132,8 +131,7 @@ public class EmiAgnosFabric extends EmiAgnos {
 			try {
 				list.add(new EmiPluginContainer(container.getEntrypoint(), container.getProvider().getMetadata().getId()));
 			} catch (Throwable t) {
-				EmiLog.error("Critical exception thrown when constructing EMI Plugin from mod " + container.getProvider().getMetadata().getId());
-				EmiLog.error(t);
+				EmiLog.error("Critical exception thrown when constructing EMI Plugin from mod " + container.getProvider().getMetadata().getId(), t);
 			}
 		}
 		return list;
@@ -159,7 +157,7 @@ public class EmiAgnosFabric extends EmiAgnos {
 								EmiStack.of(EmiPort.setPotion(stack.copy(), recipe.to().value())), id));
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						EmiLog.error("Error registering brewing recipe", e);
 					}
 				}
 			}
@@ -188,7 +186,7 @@ public class EmiAgnosFabric extends EmiAgnos {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				EmiLog.error("Error registering brewing recipe", e);
 			}
 		}
 	}

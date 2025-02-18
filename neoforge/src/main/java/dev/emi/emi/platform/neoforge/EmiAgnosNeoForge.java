@@ -121,8 +121,7 @@ public class EmiAgnosNeoForge extends EmiAgnos {
 						mods.add(data.getIModInfoData().get(0).getMods().get(0).getModId());
 					}
 				} catch (Throwable t) {
-					EmiLog.error("Exception constructing entrypoint:");
-					t.printStackTrace();
+					EmiLog.error("Exception constructing entrypoint:", t);
 				}
 			}
 		}
@@ -148,8 +147,7 @@ public class EmiAgnosNeoForge extends EmiAgnos {
 						}
 					}
 				} catch (Throwable t) {
-					EmiLog.error("Exception constructing entrypoint:");
-					t.printStackTrace();
+					EmiLog.error("Exception constructing entrypoint:", t);
 				}
 			}
 		}
@@ -175,7 +173,7 @@ public class EmiAgnosNeoForge extends EmiAgnos {
 								EmiStack.of(EmiPort.setPotion(stack.copy(), recipe.to().value())), id));
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						EmiLog.error("Error registering brewing recipe", e);
 					}
 				}
 			}
@@ -205,7 +203,7 @@ public class EmiAgnosNeoForge extends EmiAgnos {
 
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				EmiLog.error("Error registering brewing recipe", e);
 			}
 		}
 		for (IBrewingRecipe ibr : brewingRegistry.getRecipes()) {
@@ -223,7 +221,7 @@ public class EmiAgnosNeoForge extends EmiAgnos {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				EmiLog.error("Error registering brewing recipe", e);
 			}
 		}
 	}

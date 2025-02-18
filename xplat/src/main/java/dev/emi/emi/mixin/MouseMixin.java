@@ -41,8 +41,7 @@ public class MouseMixin {
 				}
 			}
 		} catch (Exception e) {
-			EmiLog.error("Error while handling mouse press");
-			e.printStackTrace();
+			EmiLog.error("Error while handling mouse press", e);
 		}
 	}
 
@@ -60,8 +59,7 @@ public class MouseMixin {
 				}
 			}
 		} catch (Exception e) {
-			EmiLog.error("Error while handling mouse release");
-			e.printStackTrace();
+			EmiLog.error("Error while handling mouse release", e);
 		}
 	}
 
@@ -79,8 +77,7 @@ public class MouseMixin {
 				EmiScreenManager.mouseDragged(mx, my, activeButton, dx, dy);
 			}
 		} catch (Exception e) {
-			EmiLog.error("Error while handling mouse drag");
-			e.printStackTrace();
+			EmiLog.error("Error while handling mouse drag", e);
 		}
 	}
 
@@ -99,8 +96,7 @@ public class MouseMixin {
 				}
 			}
 		} catch (Exception e) {
-			EmiLog.error("Error while handling mouse scroll");
-			e.printStackTrace();
+			EmiLog.error("Error while handling mouse scroll", e);
 		}
 	}
 }

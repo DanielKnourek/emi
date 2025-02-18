@@ -424,8 +424,7 @@ public class VanillaPlugin implements EmiPlugin {
 						addRecipeSafe(registry, () -> new EmiCraftingRecipe(input, EmiStack.of(EmiPort.getOutput(recipe)), id, shapeless));
 					}
 				} catch (Exception e) {
-					EmiReloadLog.warn("Exception when parsing vanilla crafting recipe " + id);
-					EmiReloadLog.error(e);
+					EmiReloadLog.warn("Exception when parsing vanilla crafting recipe " + id, e);
 				}
 			}
 		}
@@ -505,8 +504,7 @@ public class VanillaPlugin implements EmiPlugin {
 					addRecipeSafe(registry, () -> new EmiGrindstoneRecipe(i, synthetic("grindstone/repairing", EmiUtil.subId(i))));
 				}
 			} catch (Throwable t) {
-				EmiLog.error("Exception thrown registering repair recipes");
-				t.printStackTrace();
+				EmiLog.error("Exception thrown registering repair recipes", t);
 			}
 			try {
 				ItemStack defaultStack = i.getDefaultStack();
@@ -532,8 +530,7 @@ public class VanillaPlugin implements EmiPlugin {
 					addRecipeSafe(registry, () -> new EmiGrindstoneDisenchantingRecipe(i, synthetic("grindstone/disenchanting/tool", EmiUtil.subId(i))));
 				}
 			} catch (Throwable t) {
-				EmiReloadLog.warn("Exception thrown registering enchantment recipes");
-				EmiReloadLog.error(t);
+				EmiReloadLog.warn("Exception thrown registering enchantment recipes", t);
 			}
 			if (i instanceof BlockItem bi && bi.getBlock() instanceof TallFlowerBlock tf && EmiPort.canTallFlowerDuplicate(tf)) {
 				addRecipeSafe(registry, () -> basicWorld(EmiStack.of(bi).setRemainder(EmiStack.of(bi)), EmiStack.of(Items.BONE_MEAL), EmiStack.of(i),
@@ -826,8 +823,7 @@ public class VanillaPlugin implements EmiPlugin {
 		try {
 			runnable.run();
 		} catch (Throwable t) {
-			EmiReloadLog.warn("Exception thrown when reloading " + name  + " step in vanilla EMI plugin");
-			EmiReloadLog.error(t);
+			EmiReloadLog.warn("Exception thrown when reloading " + name  + " step in vanilla EMI plugin", t);
 		}
 	}
 
@@ -835,8 +831,7 @@ public class VanillaPlugin implements EmiPlugin {
 		try {
 			registry.addRecipe(supplier.get());
 		} catch (Throwable e) {
-			EmiReloadLog.warn("Exception thrown when parsing EMI recipe (no ID available)");
-			EmiReloadLog.error(e);
+			EmiReloadLog.warn("Exception thrown when parsing EMI recipe (no ID available)", e);
 		}
 	}
 
@@ -844,8 +839,7 @@ public class VanillaPlugin implements EmiPlugin {
 		try {
 			registry.addRecipe(supplier.get());
 		} catch (Throwable e) {
-			EmiReloadLog.warn("Exception thrown when parsing vanilla recipe " + EmiPort.getId(recipe));
-			EmiReloadLog.error(e);
+			EmiReloadLog.warn("Exception thrown when parsing vanilla recipe " + EmiPort.getId(recipe), e);
 		}
 	}
 
