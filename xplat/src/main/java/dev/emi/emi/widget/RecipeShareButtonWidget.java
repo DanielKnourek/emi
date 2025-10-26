@@ -5,6 +5,7 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -29,9 +30,11 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
 
 
         MinecraftClient client = MinecraftClient.getInstance();
-        client.player.sendMessage(Text.literal("Sharing message"));
-        client.player.sendMessage(Text.literal(id.toString()));
 
+        MutableText shareCommand = Text.literal("emi share recipe ");
+        shareCommand.append(id.toString());
+
+        client.player.networkHandler.sendChatCommand(shareCommand.getString());
      return true;
     }
 }

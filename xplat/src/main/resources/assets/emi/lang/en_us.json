@@ -244,6 +244,8 @@
   "tooltip.emi.default_resolution": "Click the §6recipe default button§r to assign for §aall§r recipe trees",
   "tooltip.emi.clear_resolution": "Click §6here§r to §cclear§r resolution",
 
+  "chat.emi.recipe_share": "%s shared a recipe: %s",
+
   "tooltip.emi.config": "%s Config",
   "tooltip.emi.recipe_tree": "Recipe Tree",
 
