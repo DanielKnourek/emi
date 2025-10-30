@@ -382,6 +382,10 @@ public class EmiConfig {
 	@ConfigValue("binds.favorite")
 	public static EmiBind favorite = new EmiBind("key.emi.favorite", GLFW.GLFW_KEY_A);
 
+    @Comment("Share the recipe in chat to other players for quick access.")
+    @ConfigValue("binds.share")
+    public static EmiBind share = new EmiBind("key.emi.share", GLFW.GLFW_KEY_T);
+
 	@Comment("Set the default recipe for a given stack in the output of a recipe to that recipe.")
 	@ConfigValue("binds.default-stack")
 	public static EmiBind defaultStack = new EmiBind("key.emi.default_stack",
