@@ -31,21 +31,20 @@ public class EmiShareRecipe {
             return;
         }
 
-        //TODO: change to Text.translatable
         String itemDisplayName = "View Recipe"; // fallback display text
         if (!recipe.getOutputs().isEmpty()){
-            recipe.getOutputs().get(0).getItemStack().getItem().getName().getString();
+            itemDisplayName = recipe.getOutputs().get(0).getItemStack().getItem().getName().getString();
         }
         MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
+
         Style style = Style.EMPTY
                 .withColor(Formatting.UNDERLINE)
                 .withColor(Formatting.AQUA)
                 .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/emi view recipe " + id))
-                //TODO: change to Text.translatable
-                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to view recipe")));
+                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("chat.emi.recipe_share_chat")));
         clickableId.setStyle(style);
 
-        Text message = Text.translatable("chat.emi.recipe_share", senderDisplayName, clickableId);
+        Text message = Text.translatable("chat.emi.recipe_share_widget", senderDisplayName, clickableId);
 
         player.sendMessage(message, false);
     }
