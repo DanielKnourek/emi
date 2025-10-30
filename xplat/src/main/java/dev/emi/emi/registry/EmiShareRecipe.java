@@ -41,12 +41,11 @@ public class EmiShareRecipe {
                 .withColor(Formatting.UNDERLINE)
                 .withColor(Formatting.AQUA)
                 .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/emi view recipe " + id))
-                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("tooltip.emi.recipe_share_chat")));
+                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("tooltip.emi.recipe_share_widget")));
         clickableId.setStyle(style);
 
         Text message = Text.translatable("chat.emi.recipe_share", senderDisplayName, clickableId);
 
         player.sendMessage(message, false);
     }
-
 }
