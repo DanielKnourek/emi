@@ -2,9 +2,10 @@ package dev.emi.emi.widget;
 
 import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.recipe.EmiRecipe;
+import dev.emi.emi.runtime.EmiLog;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -13,8 +14,23 @@ import java.util.List;
 
 public class RecipeShareButtonWidget extends RecipeButtonWidget{
 
+    public boolean visible = true;
+
     public RecipeShareButtonWidget(int x, int y, EmiRecipe recipe) {
         super(x, y, 84, 0, recipe);
+
+        if(recipe == null || recipe.getId() == null) {
+            EmiLog.error("Unable to create recipe for [" + recipe.toString() + "]. Recipe handler not supported");
+            this.visible = false;
+        }
+
+    }
+
+    @Override
+    public void render(DrawContext raw, int mouseX, int mouseY, float delta) {
+        if(visible){
+        super.render(raw, mouseX, mouseY, delta);
+        }
     }
 
     @Override
@@ -27,7 +43,10 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
         this.playButtonSound();
 
         Identifier id = recipe.getId();
-
+        if(id == null){
+            EmiLog.error("Unable to create recipe for [" + recipe.toString() + "]. Recipe handler not supported");
+            return false;
+        }
 
         MinecraftClient client = MinecraftClient.getInstance();
 
@@ -35,6 +54,6 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
         shareCommand.append(id.toString());
 
         client.player.networkHandler.sendChatCommand(shareCommand.getString());
-     return true;
+        return true;
     }
 }
