@@ -35,7 +35,7 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
 
     @Override
     public List<TooltipComponent> getTooltip(int mouseX, int mouseY) {
-        return List.of(TooltipComponent.of(EmiPort.ordered(EmiPort.translatable("tooltip.emi.recipe_share"))));
+        return List.of(TooltipComponent.of(EmiPort.ordered(EmiPort.translatable("tooltip.emi.recipe_share_widget"))));
     }
 
     @Override
