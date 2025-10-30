@@ -1,8 +1,7 @@
-package dev.emi.emi.registry;
+package dev.emi.emi.runtime;
 
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
-import dev.emi.emi.runtime.EmiLog;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
