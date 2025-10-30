@@ -20,7 +20,7 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
         super(x, y, 84, 0, recipe);
 
         if(recipe == null || recipe.getId() == null) {
-            EmiLog.error("Unable to create recipe for [" + recipe.toString() + "]. Recipe handler not supported");
+            EmiLog.error("Unable to create recipe for [" + recipe + "]. Recipe handler not supported");
             this.visible = false;
         }
 
@@ -44,7 +44,7 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
 
         Identifier id = recipe.getId();
         if(id == null){
-            EmiLog.error("Unable to create recipe for [" + recipe.toString() + "]. Recipe handler not supported");
+            EmiLog.error("Unable to create recipe for [" + recipe + "]. Recipe handler not supported");
             return false;
         }
 
@@ -53,7 +53,9 @@ public class RecipeShareButtonWidget extends RecipeButtonWidget{
         MutableText shareCommand = Text.literal("emi share recipe ");
         shareCommand.append(id.toString());
 
-        client.player.networkHandler.sendChatCommand(shareCommand.getString());
+        if (client.player != null) {
+            client.player.networkHandler.sendChatCommand(shareCommand.getString());
+        }
         return true;
     }
 }
