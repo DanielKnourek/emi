@@ -190,7 +190,7 @@ public class EmiConfig {
 
     @Comment("Whether recipes should have a button to share current recipe to other players.")
     @ConfigValue("ui.recipe-share-button")
-    public static boolean recipeShareButton = true;
+    public static boolean recipeShareButton = false;
 
 	@ConfigGroupEnd
 	@Comment("The GUI scale at which recipe screenshots are saved. Use 0 to use the current GUI scale.")
