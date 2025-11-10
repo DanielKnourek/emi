@@ -29,25 +29,25 @@ public class EmiShareRecipe {
             return;
         }
 
-        if(recipe.getOutputs().isEmpty() || recipe.getOutputs().getFirst().isEmpty()){
+        if(recipe.getOutputs().isEmpty() || recipe.getOutputs().get(0).isEmpty()){
             EmiLog.error("Could not create sharing message. Invalid Recipe.");
             return;
         }
-        EmiFavorite sharedRecipe = new EmiFavorite(recipe.getOutputs().getFirst().getEmiStacks().getFirst(), recipe);
+        EmiFavorite sharedRecipe = new EmiFavorite(recipe.getOutputs().get(0).getEmiStacks().get(0), recipe);
 
-        if(!shareHistory.isEmpty() && recipe.getId().equals(shareHistory.getFirst().getRecipe().getId())){
+        if(!shareHistory.isEmpty() && recipe.getId().equals(shareHistory.get(0).getRecipe().getId())){
             // Command is received 2x on a client, allow only first occurrence of this command
             // also works as primitive spam protection
             //TODO: find out why it is triggered 2 times
             return;
         }
         shareHistory.removeIf(e -> Objects.equals(e.getRecipe().getId(), sharedRecipe.getRecipe().getId()));
-        shareHistory.addFirst(sharedRecipe);
+        shareHistory.add(0,sharedRecipe);
         EmiScreenManager.repopulatePanels(SidebarType.SHARE_HISTORY);
 
         String itemDisplayName = "View Recipe"; // fallback display text
         if (!recipe.getOutputs().isEmpty()){
-            itemDisplayName = recipe.getOutputs().getFirst().getItemStack().getItem().getName().getString();
+            itemDisplayName = recipe.getOutputs().get(0).getItemStack().getItem().getName().getString();
         }
         MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
 
