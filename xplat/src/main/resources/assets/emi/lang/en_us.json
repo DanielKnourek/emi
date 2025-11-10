@@ -58,6 +58,8 @@
   "emi.sidebar.type.empty.description": "Displays nothing",
   "emi.sidebar.type.chess": "Chess",
   "emi.sidebar.type.chess.description": "Chess",
+  "emi.sidebar.type.share": "Shared Recipes",
+  "emi.sidebar.type.share.description": "Displays previously shared recipes to you",
   "emi.sidebar.theme.transparent": "Transparent",
   "emi.sidebar.theme.vanilla": "Vanilla",
   "emi.sidebar.theme.modern": "Modern",

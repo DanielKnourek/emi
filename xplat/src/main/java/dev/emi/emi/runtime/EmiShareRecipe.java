@@ -1,7 +1,10 @@
 package dev.emi.emi.runtime;
 
+import com.google.common.collect.Lists;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
+import dev.emi.emi.config.SidebarType;
+import dev.emi.emi.screen.EmiScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
@@ -11,28 +14,40 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+import java.util.Objects;
 
 public class EmiShareRecipe {
 
-    private static Identifier lastSharedRecipe = null;
+    public static List<EmiFavorite> shareHistory = Lists.newArrayList();
 
     public static void shareRecipe(PlayerEntity player, Identifier id, String senderDisplayName) {
-        // Command is received 2x on a client, allow only first occurrence of this command
-        // also works as primitive spam protection
-        if (lastSharedRecipe != null && lastSharedRecipe.equals(id)) {
-            return;
-        }
-        lastSharedRecipe = id;
 
         EmiRecipe recipe = EmiApi.getRecipeManager().getRecipe(id);
         if (recipe == null) {
-            EmiLog.info("Could not create sharing message");
+            EmiLog.error("Could not create sharing message. Could not find recipe.");
             return;
         }
 
+        if(recipe.getOutputs().isEmpty() || recipe.getOutputs().getFirst().isEmpty()){
+            EmiLog.error("Could not create sharing message. Invalid Recipe.");
+            return;
+        }
+        EmiFavorite sharedRecipe = new EmiFavorite(recipe.getOutputs().getFirst().getEmiStacks().getFirst(), recipe);
+
+        if(!shareHistory.isEmpty() && recipe.getId().equals(shareHistory.getFirst().getRecipe().getId())){
+            // Command is received 2x on a client, allow only first occurrence of this command
+            // also works as primitive spam protection
+            //TODO: find out why it is triggered 2 times
+            return;
+        }
+        shareHistory.removeIf(e -> Objects.equals(e.getRecipe().getId(), sharedRecipe.getRecipe().getId()));
+        shareHistory.addFirst(sharedRecipe);
+        EmiScreenManager.repopulatePanels(SidebarType.SHARE_HISTORY);
+
         String itemDisplayName = "View Recipe"; // fallback display text
         if (!recipe.getOutputs().isEmpty()){
-            itemDisplayName = recipe.getOutputs().get(0).getItemStack().getItem().getName().getString();
+            itemDisplayName = recipe.getOutputs().getFirst().getItemStack().getItem().getName().getString();
         }
         MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
 
