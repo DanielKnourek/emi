@@ -31,9 +31,9 @@ public class EmiSidebars {
 			case FAVORITES -> EmiFavorites.favoriteSidebar;
 			case LOOKUP_HISTORY -> lookupHistory;
 			case CRAFT_HISTORY -> craftHistory;
+            case SHARE_HISTORY -> EmiShareRecipe.shareHistory;
 			case EMPTY -> List.of();
 			case CHESS -> EmiChess.SIDEBAR;
-            case SHARE_HISTORY -> EmiShareRecipe.shareHistory;
 			default -> List.of();
 		};
 	}
