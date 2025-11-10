@@ -19,6 +19,7 @@ import java.util.Objects;
 
 public class EmiShareRecipe {
 
+    private static int HISTORY_SIZE = 32;
     public static List<EmiFavorite> shareHistory = Lists.newArrayList();
 
     public static void shareRecipe(PlayerEntity player, Identifier id, String senderDisplayName) {
@@ -35,6 +36,7 @@ public class EmiShareRecipe {
         }
         EmiFavorite sharedRecipe = new EmiFavorite(recipe.getOutputs().get(0).getEmiStacks().get(0), recipe);
 
+        // Check if you are adding the same recipe to the history again, if yes, stop.
         if(!shareHistory.isEmpty() && recipe.getId().equals(shareHistory.get(0).getRecipe().getId())){
             // Command is received 2x on a client, allow only first occurrence of this command
             // also works as primitive spam protection
@@ -43,6 +45,9 @@ public class EmiShareRecipe {
         }
         shareHistory.removeIf(e -> Objects.equals(e.getRecipe().getId(), sharedRecipe.getRecipe().getId()));
         shareHistory.add(0,sharedRecipe);
+        if(shareHistory.size() > HISTORY_SIZE) {
+            shareHistory.subList(HISTORY_SIZE, shareHistory.size()).clear();
+        }
         EmiScreenManager.repopulatePanels(SidebarType.SHARE_HISTORY);
 
         String itemDisplayName = "View Recipe"; // fallback display text
