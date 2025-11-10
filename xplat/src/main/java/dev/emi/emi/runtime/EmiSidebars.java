@@ -7,7 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
@@ -32,6 +31,7 @@ public class EmiSidebars {
 			case FAVORITES -> EmiFavorites.favoriteSidebar;
 			case LOOKUP_HISTORY -> lookupHistory;
 			case CRAFT_HISTORY -> craftHistory;
+            case SHARE_HISTORY -> EmiShareRecipe.shareHistory;
 			case EMPTY -> List.of();
 			case CHESS -> EmiChess.SIDEBAR;
 			default -> List.of();

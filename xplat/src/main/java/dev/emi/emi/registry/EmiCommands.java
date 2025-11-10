@@ -16,14 +16,15 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class EmiCommands {
-	public static final byte VIEW_RECIPE = 0x01;
-	public static final byte VIEW_TREE = 0x02;
-	public static final byte TREE_GOAL = 0x11;
-	public static final byte TREE_RESOLUTION = 0x12;
-	
-	public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static final byte VIEW_RECIPE = 0x01;
+    public static final byte VIEW_TREE = 0x02;
+    public static final byte SHARE_RECIPE = 0x4;
+    public static final byte TREE_GOAL = 0x11;
+    public static final byte TREE_RESOLUTION = 0x12;
+
+    public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
 		dispatcher.register(literal("emi")
-			.requires(source -> source.hasPermissionLevel(2))
+			.requires(source -> source.hasPermissionLevel(0))
 			.then(
 				literal("view")
 				.then(
@@ -46,6 +47,7 @@ public class EmiCommands {
 			)
 			.then(
 				literal("tree")
+                .requires(source -> source.hasPermissionLevel(2))
 				.then(
 					literal("goal")
 					.then(
@@ -67,10 +69,31 @@ public class EmiCommands {
 					)
 				)
 			)
-		);
-	}
+            .then(
+                literal("share")
+                .then(
+                    literal("recipe")
+                    .then(
+                        argument("id", identifier())
+                        .executes(context -> {
+							Identifier id = context.getArgument("id", Identifier.class);
 
-	private static void send(ServerPlayerEntity player, byte type, @Nullable Identifier id) {
-		EmiNetwork.sendToClient(player, new CommandS2CPacket(type, id));
-	}
+                            // TODO: resolve, if command is executed by server, its does not work, but other commands are not supported either
+                            context.getSource().getServer().getPlayerManager().getPlayerList().forEach(player -> {
+                                EmiNetwork.sendToClient(
+                                        player,
+                                        new CommandS2CPacket(SHARE_RECIPE, id, context.getSource().getPlayer().getName().getString())
+                                );
+                            });
+                            return Command.SINGLE_SUCCESS;
+						})
+					)
+				)
+			)
+        );
+    }
+
+    private static void send(ServerPlayerEntity player, byte type, @Nullable Identifier id) {
+        EmiNetwork.sendToClient(player, new CommandS2CPacket(type, id));
+    }
 }
