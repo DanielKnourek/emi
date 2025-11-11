@@ -30,11 +30,17 @@ public class EmiShareRecipe {
             return;
         }
 
-        if(recipe.getOutputs().isEmpty() || recipe.getOutputs().get(0).isEmpty()){
+        EmiFavorite sharedRecipe;
+
+        if(!recipe.getOutputs().isEmpty() && !recipe.getOutputs().get(0).isEmpty()) {
+            sharedRecipe = new EmiFavorite(recipe.getOutputs().get(0).getEmiStacks().get(0), recipe);
+        } else if (!recipe.getInputs().isEmpty()) {
+            // Non result recipe, using ingredient
+            sharedRecipe = new EmiFavorite(recipe.getInputs().get(0), recipe);
+        } else {
             EmiLog.error("Could not create sharing message. Invalid Recipe.");
             return;
         }
-        EmiFavorite sharedRecipe = new EmiFavorite(recipe.getOutputs().get(0).getEmiStacks().get(0), recipe);
 
         // Check if you are adding the same recipe to the history again, if yes, stop.
         if(!shareHistory.isEmpty() && recipe.getId().equals(shareHistory.get(0).getRecipe().getId())){
@@ -51,8 +57,8 @@ public class EmiShareRecipe {
         EmiScreenManager.repopulatePanels(SidebarType.SHARE_HISTORY);
 
         String itemDisplayName = "View Recipe"; // fallback display text
-        if (!recipe.getOutputs().isEmpty()){
-            itemDisplayName = recipe.getOutputs().get(0).getItemStack().getItem().getName().getString();
+        if (!sharedRecipe.getStack().getEmiStacks().isEmpty()){
+            itemDisplayName = sharedRecipe.getStack().getEmiStacks().get(0).getItemStack().getItem().getName().getString();
         }
         MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
 
