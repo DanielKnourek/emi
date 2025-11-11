@@ -5,6 +5,7 @@ import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.config.SidebarType;
 import dev.emi.emi.screen.EmiScreenManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
@@ -21,8 +22,9 @@ public class EmiShareRecipe {
 
     private static int HISTORY_SIZE = 32;
     public static List<EmiFavorite> shareHistory = Lists.newArrayList();
+    private static MinecraftClient client = MinecraftClient.getInstance();
 
-    public static void shareRecipe(PlayerEntity player, Identifier id, String senderDisplayName) {
+    public static void receiveMessage(PlayerEntity player, Identifier id, String senderDisplayName) {
 
         EmiRecipe recipe = EmiApi.getRecipeManager().getRecipe(id);
         if (recipe == null) {
@@ -72,5 +74,31 @@ public class EmiShareRecipe {
         Text message = Text.translatable("chat.emi.recipe_share", senderDisplayName, clickableId);
 
         player.sendMessage(message, false);
+    }
+    
+    public static boolean sendMessage(EmiRecipe recipe){
+        if(!isSupportedRecipe(recipe)){
+            EmiLog.error("Unable to create recipe for [" + recipe + "]. Recipe handler not supported");
+            return false;
+        }
+
+        Identifier id = recipe.getId();
+
+        if (client.player == null) {
+            return false;
+        }
+
+        String shareCommand = String.format("emi share recipe %s", id);
+        client.player.networkHandler.sendChatCommand(shareCommand);
+        return true;
+    }
+    
+    public static boolean isSupportedRecipe(EmiRecipe recipe){
+        if (recipe != null && recipe.getId() != null) {
+            return true;
+        }
+
+        EmiLog.error("Unable to create recipe for [" + recipe + "]. Recipe handler not supported");
+        return false;
     }
 }
