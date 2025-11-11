@@ -73,7 +73,7 @@ public class CommandS2CPacket implements EmiPacket {
                 }
             }
         } else if (type == EmiCommands.SHARE_RECIPE) {
-            EmiShareRecipe.shareRecipe(player, id, extraInfo);
+            EmiShareRecipe.receiveMessage(player, id, extraInfo);
         }
     }
 

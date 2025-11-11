@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import dev.emi.emi.runtime.EmiShareRecipe;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -1246,10 +1247,8 @@ public class EmiScreenManager {
 				BoM.setGoal(stack.getRecipeContext());
 				EmiApi.viewRecipeTree();
 				return true;
-			} else if (function.apply(EmiConfig.share) && stack.getRecipeContext() != null && client.player != null) {
-                client.player.networkHandler.sendChatCommand(String.format("emi share recipe %s",
-                        stack.getRecipeContext().getId()
-                        ));
+			} else if (function.apply(EmiConfig.share) && stack.getRecipeContext() != null) {
+                return EmiShareRecipe.sendMessage(stack.getRecipeContext());
             }
             Supplier<EmiRecipe> supplier = () -> {
 				return EmiUtil.getPreferredRecipe(ingredient, lastPlayerInventory, true);
