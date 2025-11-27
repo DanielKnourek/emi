@@ -164,6 +164,7 @@
   "config.emi.ui.show_cost_per_batch": "Show Cost Per Batch",
   "config.emi.ui.emi_config_button_visibility": "EMI Config Button Visibility",
   "config.emi.ui.recipe_tree_button_visibility": "Recipe Tree Button Visibility",
+  "config.emi.ui.recipe_share_chat_message_visibility": "Shared Recipe Chat Message Visibility",
   "config.emi.ui.recipe_default_button": "Recipe Default Button",
   "config.emi.ui.recipe_tree_button": "Recipe Tree Button",
   "config.emi.ui.recipe_fill_button": "Recipe Fill Button",

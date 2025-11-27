@@ -143,7 +143,7 @@ public class EmiConfig {
 	@ConfigValue("ui.recipe-tree-button-visibility")
 	public static ButtonVisibility recipeTreeButtonVisibility = ButtonVisibility.AUTO;
 
-    @Comment("Whether the shared recipe chat message should be visible.")
+    @Comment("Whether the shared recipe should be visible in chat.")
     @ConfigValue("ui.recipe-share-chat-message-visibility")
     public static boolean recipeShareChatMessageVisibility = true;
 
