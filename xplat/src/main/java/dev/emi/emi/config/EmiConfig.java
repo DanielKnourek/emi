@@ -143,6 +143,10 @@ public class EmiConfig {
 	@ConfigValue("ui.recipe-tree-button-visibility")
 	public static ButtonVisibility recipeTreeButtonVisibility = ButtonVisibility.AUTO;
 
+    @Comment("Whether the shared recipe chat message should be visible.")
+    @ConfigValue("ui.recipe-share-chat-message-visibility")
+    public static boolean recipeShareChatMessageVisibility = true;
+
 	@ConfigGroup("ui.recipe-screen")
 	@Comment("The maximum height the recipe screen will grow to be if space is available in pixels.")
 	@ConfigValue("ui.maximum-recipe-screen-height")
