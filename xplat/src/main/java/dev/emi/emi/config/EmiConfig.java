@@ -188,13 +188,13 @@ public class EmiConfig {
 	@ConfigValue("ui.recipe-fill-button")
 	public static boolean recipeFillButton = true;
 
-	@Comment("Whether recipes should have a button to take a screenshot of the recipe.")
-	@ConfigValue("ui.recipe-screenshot-button")
-	public static boolean recipeScreenshotButton = false;
-
     @Comment("Whether recipes should have a button to share current recipe to other players.")
     @ConfigValue("ui.recipe-share-button")
     public static boolean recipeShareButton = false;
+
+    @Comment("Whether recipes should have a button to take a screenshot of the recipe.")
+    @ConfigValue("ui.recipe-screenshot-button")
+    public static boolean recipeScreenshotButton = false;
 
 	@ConfigGroupEnd
 	@Comment("The GUI scale at which recipe screenshots are saved. Use 0 to use the current GUI scale.")
