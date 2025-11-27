@@ -3,6 +3,7 @@ package dev.emi.emi.runtime;
 import com.google.common.collect.Lists;
 import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.recipe.EmiRecipe;
+import dev.emi.emi.config.EmiConfig;
 import dev.emi.emi.config.SidebarType;
 import dev.emi.emi.screen.EmiScreenManager;
 import net.minecraft.client.MinecraftClient;
@@ -58,24 +59,26 @@ public class EmiShareRecipe {
         }
         EmiScreenManager.repopulatePanels(SidebarType.SHARE_HISTORY);
 
-        String itemDisplayName = "View Recipe"; // fallback display text
-        if (!sharedRecipe.getStack().getEmiStacks().isEmpty()){
-            itemDisplayName = sharedRecipe.getStack().getEmiStacks().get(0).getItemStack().getItem().getName().getString();
+        if(EmiConfig.recipeShareChatMessageVisibility){
+            String itemDisplayName = "View Recipe"; // fallback display text
+            if (!sharedRecipe.getStack().getEmiStacks().isEmpty()){
+                itemDisplayName = sharedRecipe.getStack().getEmiStacks().get(0).getItemStack().getItem().getName().getString();
+            }
+            MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
+
+            Style style = Style.EMPTY
+                    .withColor(Formatting.UNDERLINE)
+                    .withColor(Formatting.AQUA)
+                    .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/emi view recipe " + id))
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("tooltip.emi.recipe_share_chat")));
+            clickableId.setStyle(style);
+
+            Text message = Text.translatable("chat.emi.recipe_share", senderDisplayName, clickableId);
+
+            player.sendMessage(message, false);
         }
-        MutableText clickableId = Text.literal(String.format("[%s]", itemDisplayName));
-
-        Style style = Style.EMPTY
-                .withColor(Formatting.UNDERLINE)
-                .withColor(Formatting.AQUA)
-                .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/emi view recipe " + id))
-                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("tooltip.emi.recipe_share_chat")));
-        clickableId.setStyle(style);
-
-        Text message = Text.translatable("chat.emi.recipe_share", senderDisplayName, clickableId);
-
-        player.sendMessage(message, false);
     }
-    
+
     public static boolean sendMessage(EmiRecipe recipe){
         if(!isSupportedRecipe(recipe)){
             EmiLog.error("Unable to create recipe for [" + recipe + "]. Recipe handler not supported");
