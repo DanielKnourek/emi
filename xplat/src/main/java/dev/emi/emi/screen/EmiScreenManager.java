@@ -1248,9 +1248,9 @@ public class EmiScreenManager {
 				EmiApi.viewRecipeTree();
 				return true;
 			} else if (function.apply(EmiConfig.share) && stack.getRecipeContext() != null) {
-                return EmiShareRecipe.sendMessage(stack.getRecipeContext());
-            }
-            Supplier<EmiRecipe> supplier = () -> {
+				return EmiShareRecipe.sendMessage(stack.getRecipeContext());
+			}
+			Supplier<EmiRecipe> supplier = () -> {
 				return EmiUtil.getPreferredRecipe(ingredient, lastPlayerInventory, true);
 			};
 			if (craftInteraction(ingredient, supplier, stack, function)) {
