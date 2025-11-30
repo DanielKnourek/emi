@@ -50,9 +50,9 @@ public class RecipeDisplay {
 		if (EmiConfig.recipeScreenshotButton) {
 			leftButtons.add(ButtonType.SCREENSHOT);
 		}
-        if (EmiConfig.recipeShareButton) {
-            leftButtons.add(ButtonType.SHARE);
-        }
+		if (EmiConfig.recipeShareButton) {
+			leftButtons.add(ButtonType.SHARE);
+		}
 		rows = Math.max(1, (height + DISPLAY_PADDING + 2) / 14);
 		leftWidth = Math.max(0, (leftButtons.size() + rows - 1) / rows * 14 - 1);
 		rightWidth = Math.max(0, (rightButtons.size() + rows - 1) / rows * 14 - 1);
@@ -123,7 +123,7 @@ public class RecipeDisplay {
 					case TREE -> new RecipeTreeButtonWidget(bx, by, recipe);
 					case DEFAULT -> new RecipeDefaultButtonWidget(bx, by, recipe);
 					case SCREENSHOT -> new RecipeScreenshotButtonWidget(bx, by, recipe);
-                    case SHARE -> new RecipeShareButtonWidget(bx, by, recipe);
+					case SHARE -> new RecipeShareButtonWidget(bx, by, recipe);
 				});
 				yOff += 14;
 			}
@@ -153,6 +153,6 @@ public class RecipeDisplay {
 		TREE,
 		DEFAULT,
 		SCREENSHOT,
-        SHARE;
+		SHARE;
 	}
 }
